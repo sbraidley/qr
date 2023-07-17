@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="qrcode.js">
+</script>
+    <script type="text/javascript" src="html5-qrcode.js">
+</script>
+    <style type="text/css" media="screen">
+      body { text-align:center; }
+    </style>
+  </head>
+  <body>
+
+    <br><br><br>
+    <script>
+    var start = "S001P21"
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    var today = new Date();
+    var date = yyyy+mm+dd
+    var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
+    if(time.length < 6)
+      time = time + "0"
+    var end = "A"
+    var dateTime = start+''+date+''+time+''+end;
+    </script>
+
+    <div id="qrcode"></div>
+    
+    <script type="text/javascript">
+      function updateQRCode(text) {
+
+        var element = document.getElementById("qrcode");
+
+        var bodyElement = document.body;
+        if(element.lastChild)
+          element.replaceChild(showQRCode(text), element.lastChild);
+        else
+          element.appendChild(showQRCode(text));
+
+      }
+
+      updateQRCode(dateTime);
+    </script>
+  </body>
+</html>
