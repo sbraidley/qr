@@ -1,51 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script type="text/javascript" src="qrcode.js">
-</script>
-    <script type="text/javascript" src="html5-qrcode.js">
-</script>
-    <style type="text/css" media="screen">
-      body { text-align:center; }
-    </style>
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <title>Barcode Generator</title>
 
-    <br><br><br>
+    <script src="JsBarcode.all.min.js"></script>
+</head>
+
+<body>
+
+    <svg id="barcode"></svg>
+
     <script>
-    var start = "S012P32"
+        // Fixed prefix
+        const prefix = "6292318070";
 
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-    var today = new Date();
-    var date = yyyy+mm+dd
-    var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
-    if(time.length < 6)
-      time = time + "0"
-    var end = "A"
-    var dateTime = start+''+date+''+time+''+end;
+        // Generate random 4-digit number between 8500 and 9999
+        const randomNumber = Math.floor(Math.random() * (9999 - 8500 + 1)) + 8500;
+
+        // Get current date
+        const now = new Date();
+
+        // Format as DDMMYY
+        const day = String(now.getDate()).padStart(2, "0");
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const year = String(now.getFullYear()).slice(-2);
+
+        // Build date
+        const date = `${day}${month}${year}`;
+
+        // Final barcode value
+        const barcodeValue = prefix + randomNumber + date;
+
+        // Generate barcode
+        JsBarcode("#barcode", barcodeValue, {
+            format: "CODE128",
+            displayValue: true
+        });
     </script>
 
-    <div id="qrcode"></div>
-    
-    <script type="text/javascript">
-      function updateQRCode(text) {
-
-        var element = document.getElementById("qrcode");
-
-        var bodyElement = document.body;
-        if(element.lastChild)
-          element.replaceChild(showQRCode(text), element.lastChild);
-        else
-          element.appendChild(showQRCode(text));
-
-      }
-
-      updateQRCode(dateTime);
-    </script>
-    <br><br><br><h1><a href="barcode.html">Barcode</a></h1>
-  </body>
+</body>
 </html>
