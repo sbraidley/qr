@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Barcode Generator</title>
+
+    <script src="JsBarcode.all.min.js"></script>
+</head>
+
+<body>
+
+    <svg id="barcode"></svg>
+
+    <script>
+        // Fixed prefix
+        const prefix = "6292318070";
+
+        // Generate random 4-digit number between 8500 and 9999
+        const randomNumber = Math.floor(Math.random() * (9999 - 8500 + 1)) + 8500;
+
+        // Get current date
+        const now = new Date();
+
+        // Format as DDMMYY
+        const day = String(now.getDate()).padStart(2, "0");
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const year = String(now.getFullYear()).slice(-2);
+
+        // Build date
+        const date = `${day}${month}${year}`;
+
+        // Final barcode value
+        const barcodeValue = prefix + randomNumber + date;
+
+        // Generate barcode
+        JsBarcode("#barcode", barcodeValue, {
+            format: "CODE128",
+            displayValue: true
+        });
+    </script>
+
+</body>
+</html>
